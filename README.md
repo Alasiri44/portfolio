@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# Developer Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A personal portfolio site built with React and TypeScript. It presents my work, experience, and background as a full-stack developer in a single scrollable page — no external CSS framework, just inline styles and Google Fonts.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- **React 18** with **TypeScript** — fully typed components, props, and event handlers
+- **Google Fonts** — Space Grotesk (headings), Inter (body), JetBrains Mono (code/terminal accents)
+- **Inline styles** — self-contained, no Tailwind or CSS modules required
+- **Vercel** — deployment target
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+portfolio/
+├── portfolio.tsx       # Main component — all sections, data, and logic in one file
+└── README.md
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The component is organized into distinct layers:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Types** — TypeScript interfaces for every data shape (`Project`, `ExperienceItem`, `MoringaProject`, etc.)
+- **Data constants** — all content (projects, experience, skills, links) declared as typed arrays at the top of the file
+- **Sub-components** — `Cursor`, `NavLink`, `Tag`, `ProjectCard`, `SkillGroup` — small, focused, typed
+- **Main component** — assembles everything, manages scroll state and active section tracking
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Features
+
+**Typewriter hero** — cycles through role titles using a custom `useTypewriter` hook with a blinking amber cursor rendered as a standalone `Cursor` component.
+
+**Sticky nav with active section tracking** — uses `IntersectionObserver` to highlight the current section in the navbar as you scroll. Collapses to a hamburger menu on mobile.
+
+**Dot-grid background** — a `position: fixed` layer built with three stacked CSS `backgroundImage` gradients: vertical lines, horizontal lines, and radial dots. Semi-transparent card surfaces let the grid show through without competing with text.
+
+**Project cards** — each card has a hover state that reveals a top accent border in the project's assigned color and lightens the card background.
+
+**Experience & Education** — left-border accent cards for work history, with Moringa School expanded to include a nested grid of training projects.
+
+---
+
+## Sections
+
+| Section    | Description                                                       |
+|------------|-------------------------------------------------------------------|
+| Hero       | Name, animated role typewriter, short bio, CTA buttons           |
+| Experience | Javan Informatics internship — role, period, description          |
+| Projects   | AIM TOSE, Church Membership Platform, Kay Ming Portfolio, POS Refactor |
+| Education  | Moringa School — program details and four training projects       |
+| Skills     | Frontend, Backend, Data, and Tooling categories                  |
+| Contact    | GitHub, LinkedIn, and email links                                 |
+
+---
+
+## Running Locally
+
+```bash
+npm install
+npm run dev
 ```
+
+The portfolio is designed to drop directly into a Next.js or Vite project as the root page component.
